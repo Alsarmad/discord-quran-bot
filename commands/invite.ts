@@ -15,6 +15,6 @@ export class InviteCommand implements Command {
 			],
 			additionalScopes: ['applications.commands']
 		})
-		return ctx.reply({ content: `[**Click Here!**](${invite})`, ephemeral: true })
+		return ctx.reply({ content: `[**Click Here!**](<${invite}>)`, ephemeral: true })
 	}
 }
