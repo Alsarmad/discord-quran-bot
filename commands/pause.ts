@@ -2,7 +2,7 @@ import { CTX, Command } from 'discord.js'
 
 export class PauseCommand implements Command {
 	name = 'pause'
-	description = 'Pauses the bot.'
+	description = 'Pauses/Resumes the bot.'
 	voice = {
 		playing: true
 	}

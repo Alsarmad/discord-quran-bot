@@ -100,7 +100,7 @@ export class Player {
 	}
 
 	leave(): void {
-		this.connection?.destroy()
+		this.connection?.disconnect()
 	}
 
 	pause(pause = true): boolean {

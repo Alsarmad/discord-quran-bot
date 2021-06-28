@@ -17,11 +17,7 @@ export async function getRecitersData(type: 'ayah' | 'surah' = 'surah') {
 
 export async function getReciters(type: 'page' | 'surah' | 'ayah'): Promise<{ [key: string]: string }[]> {
 	if (type === 'page') {
-		return Object.keys(RECITERS).map((name) => {
-			return {
-				name: name.split(' ').map((str) => str.slice(0, 1).toUpperCase() + str.slice(1)).join(' ')
-			}
-		})
+		return Object.keys(RECITERS).map((name) => ({ name: capitalize(name) }))
 	}
 
 	const data = await getRecitersData(type)
