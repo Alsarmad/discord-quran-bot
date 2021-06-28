@@ -1,0 +1,32 @@
+{
+   "name": "quran-bot",
+   "version": "1.0.0",
+   "description": "A Discord bot that can play Qur'an recitations in voice/stage channel.",
+   "main": "index.js",
+   "scripts": {
+      "start": "npm run build && node -r tsconfig-paths/register dist/index",
+      "build": "tsc"
+   },
+   "author": "TheMaestroo",
+   "license": "ISC",
+   "dependencies": {
+      "@discordjs/voice": "^0.5.1",
+      "arabic2franko": "^1.0.3",
+      "discord.js": "^13.0.0-dev.985d4d6a438fc9123264f6a1c600f34fccc1825f",
+      "dotenv": "^10.0.0",
+      "ffmpeg-static": "^4.4.0",
+      "fuse.js": "^6.4.6",
+      "libsodium-wrappers": "^0.7.9",
+      "ms": "^2.1.3",
+      "node-fetch": "^2.6.1"
+   },
+   "devDependencies": {
+      "@types/ms": "^0.7.31",
+      "@types/node-fetch": "^2.5.10",
+      "tsconfig-paths": "^3.9.0",
+      "typescript": "^4.3.4"
+   },
+   "engines": {
+      "node": ">=14"
+   }
+}
