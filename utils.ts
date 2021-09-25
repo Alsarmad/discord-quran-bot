@@ -10,7 +10,10 @@ export async function getRecitersData(type: 'ayah' | 'surah' = 'surah') {
 	const response = await fetch(url)
 
 	if (response.ok)
-		return await response.json()
+		return await response.json() as {
+			reciters: Record<string, string>[],
+			reciters_verse: Record<string, string>[]
+		}
 
 	throw new Error('The api returned an invalid response, try again later')
 }
@@ -24,7 +27,7 @@ export async function getReciters(type: 'page' | 'surah' | 'ayah'): Promise<{ [k
 	const temp: string[] = []
 
 	if (type === 'ayah') {
-		return (data.reciters_verse as { [key: string]: string }[])
+		return data.reciters_verse
 			.filter((obj) => !['0', ''].includes(obj.audio_url_bit_rate_128))
 			.map((obj) => {
 				return {
@@ -41,7 +44,7 @@ export async function getReciters(type: 'page' | 'surah' | 'ayah'): Promise<{ [k
 				return obj
 			})
 	} else {
-		return (data.reciters as { [key: string]: string }[])
+		return data.reciters
 			.filter((obj) => Number(obj.count) >= 90)
 			.map((obj) => ({
 				name: obj.name,
@@ -63,7 +66,7 @@ export async function getVerseCount(surah: number): Promise<number> {
 	const response = await fetch(`http://api.quran.com/api/v3/chapters/${surah}`)
 
 	if (response.ok) {
-		const data = await response.json()
+		const data = await response.json() as { chapter: { verses_count: string } }
 		return Number(data.chapter.verses_count)
 	}
 
@@ -77,7 +80,13 @@ export async function getSurah(surah: number): Promise<{
 	const response = await fetch(`http://api.quran.com/api/v3/chapters/${surah}`)
 
 	if (response.ok) {
-		const data = await response.json()
+		const data = await response.json() as {
+			chapter: {
+				name_simple: string,
+				name_arabic: string
+			}
+		}
+
 		return {
 			name: data.chapter.name_simple,
 			arabic_name: data.chapter.name_arabic
@@ -92,7 +101,10 @@ export async function getSurahNames(): Promise<{ [key: string]: string }> {
 	const response = await fetch('http://api.quran.com/api/v3/chapters')
 
 	if (response.ok) {
-		const data = await response.json()
+		const data = await response.json() as {
+			chapters: [{ id: string, name_simple: string }]
+		}
+
 		const names: Record<string, string> = {}
 
 		for (const surah of data.chapters) {
@@ -118,7 +130,13 @@ export async function getPrayerTimes(location: string, method = 5, school = 0): 
 	})
 
 	if (response.ok) {
-		const data = await response.json()
+		const data = await response.json() as {
+			data: {
+				timings: Record<string, string>,
+				readable: string
+			}
+		}
+
 		const times = data.data.timings
 		return {
 			fajr: times.Fajr,
