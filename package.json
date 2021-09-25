@@ -7,7 +7,6 @@
       "start": "ts-node -T index.ts"
    },
    "author": "TheMaestroo",
-   "license": "ISC",
    "dependencies": {
       "@discordjs/voice": "^0.6.0",
       "arabic2franko": "^1.0.3",
