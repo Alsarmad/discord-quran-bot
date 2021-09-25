@@ -3,7 +3,7 @@ import { AudioPlayer, VoiceConnection } from '@discordjs/voice'
 
 declare module 'discord.js' {
 
-	interface Command extends ApplicationCommandData {
+	interface Command extends ChatInputApplicationCommandData {
 		voice?: {
 			connected?: boolean
 			playing?: boolean

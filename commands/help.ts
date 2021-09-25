@@ -1,4 +1,5 @@
 import { CTX, Command, MessageEmbed, ApplicationCommandOptionData } from 'discord.js'
+import { Client } from '../structures'
 
 const ICON_URL = 'https://cdn.discordapp.com/app-icons/706134327200841870/e6bb860daa7702ea70e6d6e29c3d36f6.png'
 
@@ -25,7 +26,7 @@ export class HelpCommand implements Command {
 				.setDescription(command.description)
 				.addField('Usage: ', this.formatOptions(command.name, command.options))
 		} else {
-			const commands = ctx.client.commands.map((cmd) => `• \`/${cmd.name}\` - ${cmd.description}`).join('\n')
+			const commands = (ctx.client as Client).commands.map((cmd) => `• \`/${cmd.name}\` - ${cmd.description}`).join('\n')
 
 			embed
 				.setDescription('**Use `/help <command>` for more information about a command.**\nExample: `/help play`\n\n')
