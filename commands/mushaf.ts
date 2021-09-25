@@ -45,8 +45,9 @@ export class MushafCommand implements Command {
 		const msg = await ctx.reply({
 			files: [toPageLink(page)],
 			content: `Page: **${page}/${PAGE_LIMIT}**`,
-			components: [BUTTONS]
-		}).then(() => ctx.fetchReply())
+			components: [BUTTONS],
+			fetchReply: true
+		})
 
 		const collector = ctx.channel.createMessageComponentCollector({
 			filter: (button) => button.message.id === msg.id && button.user.id === ctx.user.id,

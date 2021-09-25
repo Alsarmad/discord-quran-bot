@@ -1,9 +1,7 @@
 import 'dotenv/config'
-
+import { createServer } from 'http'
 import { Client, Intents } from './structures'
 import config from './config'
-
-import { createServer } from 'http'
 
 createServer((_req, res) => {
     res.write('Hello')
