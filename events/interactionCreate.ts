@@ -7,7 +7,7 @@ export const interactionCreate = async (ctx: Interaction): Promise<void> => {
 
 	const command = ctx.client.commands.get(ctx.commandName)
 
-	if (!command) 
+	if (!command)
 		return ctx.reply({ content: 'Command not exists.', ephemeral: true })
 
 	if (!ctx.member || !(ctx.member instanceof GuildMember)) {
@@ -16,10 +16,13 @@ export const interactionCreate = async (ctx: Interaction): Promise<void> => {
 
 	const player = ctx.guild.player
 
-	if (command.voice?.joined) {
-		if (!ctx.member.voice.channel) return ctx.reply({ content: 'Join voice/stage channel!', ephemeral: true })
+	if (command.voice?.joined && !ctx.member.voice.channel) {
+		return ctx.reply({
+			content: 'Join voice/stage channel!',
+			ephemeral: true
+		})
 	}
-	
+
 	if (command.voice?.connected) {
 		if (ctx.member.voice.channel) {
 			if (!player.connected) {
@@ -35,12 +38,15 @@ export const interactionCreate = async (ctx: Interaction): Promise<void> => {
 		}
 	}
 
-	if (command.voice?.playing) {
-		if (!player.playing) return ctx.reply({ content: 'Nothing is playing.', ephemeral: true })
+	if (command.voice?.playing && !player.playing) {
+		return ctx.reply({
+			content: 'Nothing is playing.', 
+			ephemeral: true
+		})
 	}
 
 	try {
-		await command.run(ctx)
+		await Promise.resolve(command.run(ctx))
 	} catch (error) {
 		console.error(error)
 	}
