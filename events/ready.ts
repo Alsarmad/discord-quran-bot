@@ -16,7 +16,7 @@ export const ready = async (client: Client<true>): Promise<void> => {
 	})
 
 	const promises: Promise<unknown>[] = []
-	const commands = client.commands.array()
+	const commands = [...client.commands.values()]
 
 	for (const guild of client.guilds.cache.values()) {
 		promises.push(guild.commands.set(commands))

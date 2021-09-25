@@ -4,7 +4,7 @@ export class StopCommand implements Command {
 	name = 'stop'
 	description = 'Disconnects the bot from voice/stage.'
 	run(ctx: CTX): Promise<unknown> {
-		const player = ctx.guild.player
+		const player = ctx.client.getPlayer(ctx.guild.id)
 
 		if (player.connected) {
 			player.stop()

@@ -18,9 +18,10 @@ declare module 'discord.js' {
 		member: GuildMember
 	}
 
-	interface Client {
+	interface Client<Ready extends boolean = boolean> {
 		commands: Collection<string, Command>
 		radio: AudioPlayer
+		getPlayer(guildId: string): Player
 	}
 
 	interface Interaction {
@@ -28,7 +29,6 @@ declare module 'discord.js' {
 	}
 
 	interface Guild {
-		player: Player
 		connection: VoiceConnection | null
 	}
 }

@@ -1,11 +1,7 @@
 import { getVoiceConnection, VoiceConnectionStatus } from '@discordjs/voice'
 import { BaseGuild } from 'discord.js'
-import { Player } from '../structures'
-
 
 class Guild extends BaseGuild {
-	readonly player = new Player()
-
 	get connection() {
 		const connection = getVoiceConnection(this.id)
 

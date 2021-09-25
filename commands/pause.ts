@@ -7,7 +7,7 @@ export class PauseCommand implements Command {
 		playing: true
 	}
 	run(ctx: CTX): Promise<unknown> {
-		const player = ctx.guild.player
+		const player = ctx.client.getPlayer(ctx.guild.id)
 		const isPaused = player.paused
 
 		player.pause(!isPaused)

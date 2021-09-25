@@ -14,7 +14,6 @@ createServer((_req, res) => {
 const client = new Client({
 	intents: [
 		Intents.FLAGS.GUILDS, 
-		Intents.FLAGS.GUILD_MEMBERS,
 		Intents.FLAGS.GUILD_VOICE_STATES
 	],
 	restTimeOffset: 0

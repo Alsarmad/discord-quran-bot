@@ -103,7 +103,7 @@ export class PlayCommand implements Command {
 
 		const url = `${reciterInfo.server}/${toID(surah)}.mp3`
 
-		ctx.guild.player.play(url)
+		ctx.client.getPlayer(ctx.guild.id).play(url)
 
 		const {
 			name,
@@ -125,7 +125,7 @@ export class PlayCommand implements Command {
 		const pageId = toID(page)
 		const url = `https://everyayah.com/data/${EVERYAYAH_RECITERS[reciter as keyof typeof EVERYAYAH_RECITERS]}/PageMp3s/Page${pageId}.mp3`
 
-		ctx.guild.player.play(url)
+		ctx.client.getPlayer(ctx.guild.id).play(url)
 
 		return ctx.followUp({
 			files: [`https://www.searchtruth.org/quran/images2/large/page-${pageId}.jpeg`],
@@ -155,7 +155,7 @@ export class PlayCommand implements Command {
 
 		const url = `${reciterInfo.ayah_url}/${toID(surah)}${toID(ayah)}.mp3`
 
-		ctx.guild.player.play(url)
+		ctx.client.getPlayer(ctx.guild.id).play(url)
 
 		const {
 			name,

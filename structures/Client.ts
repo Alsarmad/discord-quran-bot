@@ -5,11 +5,25 @@ import { createAudioPlayer } from '@discordjs/voice'
 
 import * as commands from '../commands'
 import * as events from '../events'
+import { Player } from '.'
 
 
 export class Client extends DiscordClient {
 	commands = new Collection<string, BaseCommand>()
+	players = new Collection<string, Player>()
 	radio = createAudioPlayer({ debug: false })
+
+	getPlayer(guildId: string): Player {
+		let player = this.players.get(guildId)
+
+		if (!player) {
+			player = new Player()
+			this.players.set(guildId, player)
+		}
+
+		return player
+	}
+
 	load(type: 'commands' | 'events'): number {
 		if (type === 'commands') {
 			

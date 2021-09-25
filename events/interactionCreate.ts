@@ -14,7 +14,7 @@ export const interactionCreate = async (ctx: Interaction): Promise<void> => {
 		ctx.member = await ctx.guild.members.fetch(ctx.user.id)
 	}
 
-	const player = ctx.guild.player
+	const player = ctx.client.getPlayer(ctx.guild.id)
 
 	if (command.voice?.joined && !ctx.member.voice.channel) {
 		return ctx.reply({
