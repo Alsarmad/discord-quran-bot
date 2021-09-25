@@ -9,10 +9,10 @@ export class LiveCommand implements Command {
 		joined: true
 	}
 	async run(ctx: CTX): Promise<unknown> {
-		await ctx.defer()
+		await ctx.deferReply()
 
 		const connection = ctx.guild.connection ?? joinVoiceChannel({
-			channelId: ctx.member.voice.channelID!,
+			channelId: ctx.member.voice.channelId!,
 			guildId: ctx.guild.id,
 			adapterCreator: ctx.guild.voiceAdapterCreator,
 			debug: false

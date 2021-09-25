@@ -3,12 +3,7 @@ import {
 	joinVoiceChannel, StreamType, VoiceConnection, VoiceConnectionDisconnectReason, VoiceConnectionStatus
 } from '@discordjs/voice'
 import type { StageChannel, VoiceChannel } from 'discord.js'
-
-
-function wait(time: number) {
-	return new Promise((resolve) => setTimeout(resolve, time).unref())
-}
-
+import { setTimeout } from 'timers/promises'
 
 export function handleConnectionStatus(connection: VoiceConnection) {
 	let readyLock = false
@@ -23,7 +18,7 @@ export function handleConnectionStatus(connection: VoiceConnection) {
 					connection.destroy()
 				}
 			} else if (connection.rejoinAttempts < 5) {
-				await wait((connection.rejoinAttempts + 1) * 5_000)
+				await setTimeout((connection.rejoinAttempts + 1) * 5_000)
 				connection.rejoin()
 			} else {
 				connection.destroy()

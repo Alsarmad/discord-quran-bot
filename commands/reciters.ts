@@ -1,19 +1,19 @@
-import arabic2franko from 'arabic2franko'
+import { getReciters } from '../utils'
 import { Command, CTX, MessageActionRow, MessageButton } from 'discord.js'
+import arabic2franko from 'arabic2franko'
 import Fuse from 'fuse.js'
 import ms from 'ms'
-import { getReciters } from '../utils'
 
 const isArabic = (str: string) => /^[\u0621-\u064A0-9 ]+$/i.test(str)
 const BUTTONS = new MessageActionRow({
 	components: [
 		new MessageButton()
 			.setStyle('PRIMARY')
-			.setCustomID('⬅️')
+			.setCustomId('⬅️')
 			.setLabel('Back')
 			.setEmoji('⬅️'),
 		new MessageButton()
-			.setCustomID('➡️')
+			.setCustomId('➡️')
 			.setStyle('PRIMARY')
 			.setLabel('Next')
 			.setEmoji('➡️')
@@ -46,24 +46,24 @@ export class RecitersCommand implements Command {
 	}]
 
 	async run(ctx: CTX): Promise<void> {
-		await ctx.defer()
+		await ctx.deferReply()
 
-		const type = ctx.options.get('for')!.value as string
-		const name = ctx.options.get('name')?.value as string
+		const type = ctx.options.getString('for', true)
+		const name = ctx.options.getString('name', false)
 
-		let reciters = await getReciters(type as 'page')
+		let reciters = await getReciters(type as 'page' | 'ayah' | 'surah')
 
 		if (name) {
 			const fuse = new Fuse(reciters, { 
 				keys: ['name'],
 				findAllMatches: true
 			})
-
 			
 			reciters = fuse.search(isArabic(name) ? arabic2franko(name) : name).map(({ item }) => item)
 
-			if (!reciters.length) 
+			if (!reciters.length) {
 				return void ctx.followUp('**Not Found!**')
+			}
 		}
 
 		const max = Math.floor(Math.ceil(reciters.length / 10))
@@ -73,36 +73,36 @@ export class RecitersCommand implements Command {
 
 		let page = pages[0], i = 0
 
-		const m = await ctx.followUp({
+		const msg = await ctx.followUp({
 			content: `**Page:** ${i + 1}/${max}\n\n${this.formatReciters(page)}`,
 			components: [BUTTONS]
 		})
 
-		const collector = ctx.channel.createMessageComponentInteractionCollector({
+		const collector = ctx.channel.createMessageComponentCollector({
 			time: ms('5 minutes'),
 			idle: ms('2 minutes'),
-			filter: (button) => button.message.id === m.id && button.user.id === ctx.user.id
+			filter: (button) => button.message.id === msg.id && button.user.id === ctx.user.id
 		})
 
 		collector.on('collect', async (interaction) => {
 			await interaction.deferUpdate()
 
-			if (interaction.customID === '➡️') {
+			if (interaction.customId === '➡️') {
 				if (i === max) return
 				i++
-			} else if (interaction.customID === '⬅️') {
+			} else if (interaction.customId === '⬅️') {
 				if (i === 0) return
 				i--
 			} else return
 
 			page = pages[i]
 
-			await ctx.channel.messages.edit(m.id, {
+			await ctx.channel.messages.edit(msg.id, {
 				content: `**Page:** ${i + 1}/${max}\n\n${this.formatReciters(page)}`,
 			})
 		})
 
-		collector.on('end', () => void ctx.channel.messages.edit(m.id, { components: [] }))
+		collector.on('end', () => void ctx.channel.messages.edit(msg.id, { components: [] }))
 	}
 
 	formatReciters(reciters: { [key: string]: string }[]): string {

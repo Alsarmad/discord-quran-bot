@@ -3,11 +3,11 @@ import { createAudioResource, StreamType } from '@discordjs/voice'
 
 const STREAM_URL = 'https://qurango.net/radio/tarateel'
 
-export const ready = async (client: Client): Promise<void> => {
+export const ready = async (client: Client<true>): Promise<void> => {
 	console.log('Connected')
-	console.log(client.user!.tag)
+	console.log(client.user.tag)
 
-	client.user!.setPresence({
+	client.user.setPresence({
 		activities: [{
 			name: ' إذا قرأ القرآن فاستمعوا له وأنصتوا لعلكم ترحمون',
 			type: 'LISTENING'

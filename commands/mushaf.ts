@@ -6,16 +6,16 @@ const BUTTONS = new MessageActionRow({
 	components: [
 		new MessageButton()
 			.setStyle('PRIMARY')
-			.setCustomID('⬅️')
+			.setCustomId('⬅️')
 			.setLabel('Back')
 			.setEmoji('⬅️'),
 		new MessageButton()
 			.setStyle('DANGER')
-			.setCustomID('⏹️')
+			.setCustomId('⏹️')
 			.setLabel('Stop')
 			.setEmoji('⏹️'),
 		new MessageButton()
-			.setCustomID('➡️')
+			.setCustomId('➡️')
 			.setStyle('PRIMARY')
 			.setLabel('Next')
 			.setEmoji('➡️')
@@ -35,21 +35,21 @@ export class MushafCommand implements Command {
 	}]
 
 	async run(ctx: CTX): Promise<void> {
-		let page = ctx.options.get('page')?.value as number ?? 1
+		let page = ctx.options.getInteger('page', false) ?? 1
 
 		if (page < 0 || page > PAGE_LIMIT) return ctx.reply({
 			content: '**Sorry, the page must be between 1 and 604.**',
 			ephemeral: true
 		})
 
-		const m = await ctx.reply({
+		const msg = await ctx.reply({
 			files: [toPageLink(page)],
 			content: `Page: **${page}/${PAGE_LIMIT}**`,
 			components: [BUTTONS]
 		}).then(() => ctx.fetchReply())
 
-		const collector = ctx.channel.createMessageComponentInteractionCollector({
-			filter: (button) => button.message.id === m.id && button.user.id === ctx.user.id,
+		const collector = ctx.channel.createMessageComponentCollector({
+			filter: (button) => button.message.id === msg.id && button.user.id === ctx.user.id,
 			time: ms('1 hour'),
 			idle: ms('15 minute')
 		})
@@ -57,23 +57,23 @@ export class MushafCommand implements Command {
 		collector.on('collect', async (interaction) => {
 			await interaction.deferUpdate()
 
-			if (interaction.customID === '➡️') {
+			if (interaction.customId === '➡️') {
 				if (page === PAGE_LIMIT) return
 				page++
-			} else if (interaction.customID === '⬅️') {
+			} else if (interaction.customId === '⬅️') {
 				if (page === 1) return
 				page--
-			} else if (interaction.customID === '⏹️') {
+			} else if (interaction.customId === '⏹️') {
 				return collector.stop()
 			} else return
 
-			await ctx.channel.messages.edit(m.id, {
+			await ctx.channel.messages.edit(msg.id, {
 				attachments: [],
 				files: [toPageLink(page)],
 				content: `Page: **${page}/${PAGE_LIMIT}**`,
 			})
 		})
 
-		collector.on('end', () => void ctx.channel.messages.edit(m.id, { components: [] }))
+		collector.on('end', () => void ctx.channel.messages.edit(msg.id, { components: [] }))
 	}
 }

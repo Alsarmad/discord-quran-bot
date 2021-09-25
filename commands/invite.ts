@@ -13,7 +13,7 @@ export class InviteCommand implements Command {
 				Permissions.FLAGS.CONNECT,
 				Permissions.FLAGS.VIEW_CHANNEL
 			],
-			additionalScopes: ['applications.commands']
+			scopes: ['applications.commands']
 		})
 		return ctx.reply({ content: `[**Click Here!**](<${invite}>)`, ephemeral: true })
 	}

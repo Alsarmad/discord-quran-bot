@@ -66,14 +66,12 @@ export class PlayCommand implements Command {
 	}
 	
 	async run(ctx: CTX): Promise<void> {
-		await ctx.defer()
+		await ctx.deferReply()
 
-		const option = ctx.options.first()!
-		const commandName = option.name
-		ctx.options = option.options!
+		const commandName = ctx.options.getSubcommand(true) as 'page' | 'surah' | 'ayah'
 
 		try {
-			await this[commandName as 'page']?.(ctx)
+			await this[commandName]?.(ctx)
 		} catch (error) {
 			if (typeof error === 'string') ctx.followUp(error)
 			else console.error(error)
@@ -112,14 +110,12 @@ export class PlayCommand implements Command {
 			arabic_name
 		} = await utils.getSurah(surah)
 
-		return ctx.followUp({
-			content: `🆔 | **Surah:** ${name} (${arabic_name})\n🗣️ | **Reciter:** ${reciterInfo.name}\n👤 | **Riwayah**: *${reciterInfo.riwayah}*`
-		})
+		return ctx.followUp(`🆔 | **Surah:** ${name} (${arabic_name})\n🗣️ | **Reciter:** ${reciterInfo.name}\n👤 | **Riwayah**: *${reciterInfo.riwayah}*`)
 	}
 
 	async page(ctx: CTX) {
-		const page = ctx.options.get('page')!.value as number
-		const reciter = (ctx.options.get('reciter')?.value as string ?? 'mishary al-afasy').toLowerCase()
+		const page = ctx.options.getInteger('page', true)
+		const reciter = (ctx.options.getString('reciter') ?? 'mishary al-afasy').toLowerCase()
 
 		if (page < 0 || page > PAGE_LIMIT) 
 			throw '**Sorry, the page must be between 1 and 604.**'
@@ -138,9 +134,9 @@ export class PlayCommand implements Command {
 	}
 	
 	async ayah(ctx: CTX) {
-		const surah = ctx.options.get('surah')!.value as number
-		const ayah = ctx.options.get('ayah')!.value as number
-		const reciter = (ctx.options.get('reciter')?.value as string ?? 'Mishary Alafasi').toLowerCase()
+		const surah = ctx.options.getInteger('surah', true)
+		const ayah = ctx.options.getInteger('ayah', true)
+		const reciter = (ctx.options.getString('reciter') ?? 'Mishary Alafasi').toLowerCase()
 
 		if (surah < 0 || surah > SURAH_LIMIT) throw [
 			'**Surah not found.** Use the surah\'s number. Examples: ',

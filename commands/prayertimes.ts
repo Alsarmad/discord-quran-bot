@@ -72,11 +72,11 @@ export class PrayerTimesCommand implements Command {
 	}]
 
 	async run(ctx: CTX): Promise<unknown> {
-		await ctx.defer()
+		await ctx.deferReply()
 
-		const location = ctx.options.get('address')!.value as string
-		const method = ctx.options.get('method')?.value as number ?? 5
-		const school = ctx.options.get('school')?.value as number ?? 0
+		const location = ctx.options.getString('address', true)
+		const method = ctx.options.getInteger('method', false) ?? 5
+		const school = ctx.options.getInteger('school', false) ?? 0
 
 		const embed = new MessageEmbed()
 			.setAuthor('Prayer Times for ' + location)
@@ -106,7 +106,7 @@ export class PrayerTimesCommand implements Command {
 
 			return ctx.followUp({ embeds: [embed] })
 		} catch {
-			return ctx.followUp({ content: 'Location not found! '})
+			return ctx.followUp({ content: 'Location not found!' })
 		}
 	}
 }

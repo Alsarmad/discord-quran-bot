@@ -1,3 +1,3 @@
 export * from './ready'
 export * from './guildCreate'
-export * from './interaction'
+export * from './interactionCreate'

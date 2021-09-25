@@ -2,8 +2,8 @@ import type { Interaction } from 'discord.js'
 import { GuildMember } from 'discord.js'
 
 
-export const interaction = async (ctx: Interaction): Promise<void> => {
-	if (!ctx.isCommand() || !ctx.guildID) return
+export const interactionCreate = async (ctx: Interaction): Promise<void> => {
+	if (!ctx.isCommand() || !ctx.inGuild()) return
 
 	const command = ctx.client.commands.get(ctx.commandName)
 

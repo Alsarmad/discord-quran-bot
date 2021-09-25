@@ -12,7 +12,7 @@ export class HelpCommand implements Command {
 		required: false
 	}]
 	run(ctx: CTX): Promise<unknown> {
-		const commandName = (ctx.options.get('command')?.value as string)?.toLowerCase()
+		const commandName = ctx.options.getString('command', false)?.toLowerCase()
 		const command = ctx.client.commands.get(commandName)
 
 		const embed = new MessageEmbed()
