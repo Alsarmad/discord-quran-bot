@@ -5,7 +5,8 @@
    "main": "dist/index.js",
    "scripts": {
       "build": "tsc",
-      "start": "tsc && node dist/index"
+      "start": "tsc && node dist/index",
+      "replit": "npm i node@16 && npm start"
    },
    "author": "TheMaestroo",
    "dependencies": {

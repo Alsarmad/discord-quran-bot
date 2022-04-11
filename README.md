@@ -26,8 +26,8 @@ A simple bot that can play recitations of surahs, ayahs and mushaf pages from th
 
 1. Download the [zip](https://github.com/TheMaestro1s/quran-bot.git) file and extract it
 2. Go inside `quran-bot` folder
-3. Create a file named `.env` add put the following in:
-
+3. Create a file named `.env` or rename `.env.example`
+4. Put the following to `.env` file:
 ```
 DISCORD_TOKEN=your-discord-token-here
 ```

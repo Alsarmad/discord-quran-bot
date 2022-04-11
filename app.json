@@ -1,0 +1,12 @@
+{
+	"name": "quran-bot",
+	"description": "A Discord bot that can play Qur'an recitations in voice chat.",
+	"repository": "https://github.com/TheMaestro1s/quran-bot",
+	"keywords": ["discord", "discordjs", "quran", "bot"],
+	"env": {
+		"DISCORD_TOKEN": {
+			"description": "Your discord app token.",
+			"value": "your-discord-token-here"
+		}
+	}
+}
