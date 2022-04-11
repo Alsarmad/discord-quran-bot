@@ -4,7 +4,7 @@
    "description": "A Discord bot that can play Qur'an recitations in voice/stage channel.",
    "main": "dist/index.js",
    "scripts": {
-      "build": "tsc src",
+      "build": "tsc",
       "start": "npm run build && node dist/index"
    },
    "author": "TheMaestroo",
