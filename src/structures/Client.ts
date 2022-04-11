@@ -1,5 +1,4 @@
-import '../extensions/Guild'
-
+import '../extensions'
 import { Client as DiscordClient, Collection, Command as BaseCommand } from 'discord.js'
 import { createAudioPlayer } from '@discordjs/voice'
 

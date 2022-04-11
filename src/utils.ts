@@ -1,21 +1,23 @@
 import fetch from 'node-fetch'
-import RECITERS from './assets/reciters.json'
+import RECITERS from '../assets/reciters.json'
 
 export function capitalize(text: string): string {
 	return text.split(' ').map((str) => str.slice(0, 1).toUpperCase() + str.slice(1)).join(' ')
 }
 
+
+const error = () => new Error('The api returned an invalid response, try again later')
+
 export async function getRecitersData(type: 'ayah' | 'surah' = 'surah') {
 	const url = type !== 'ayah' ? 'http://mp3quran.net/api/_english.php' : 'https://api.mp3quran.net/verse/verse_en.json'
 	const response = await fetch(url)
 
-	if (response.ok)
-		return await response.json() as {
-			reciters: Record<string, string>[],
-			reciters_verse: Record<string, string>[]
-		}
+	if (response.ok) return await response.json() as {
+		reciters: Record<string, string>[],
+		reciters_verse: Record<string, string>[]
+	}
 
-	throw new Error('The api returned an invalid response, try again later')
+	throw error()
 }
 
 export async function getReciters(type: 'page' | 'surah' | 'ayah'): Promise<{ [key: string]: string }[]> {
@@ -70,7 +72,7 @@ export async function getVerseCount(surah: number): Promise<number> {
 		return Number(data.chapter.verses_count)
 	}
 
-	throw new Error('The api returned an invalid response, try again later')
+	throw error()
 }
 
 export async function getSurah(surah: number): Promise<{
@@ -93,7 +95,7 @@ export async function getSurah(surah: number): Promise<{
 		}
 	}
 
-	throw new Error('The api returned an invalid response, try again later')
+	throw error()
 }
 
 
@@ -114,7 +116,7 @@ export async function getSurahNames(): Promise<{ [key: string]: string }> {
 		return names
 	}
 
-	throw new Error('The api returned an invalid response, try again later')
+	throw error()
 }
 
 export async function getSurahIdByName(name: string): Promise<string | null> {
@@ -151,5 +153,5 @@ export async function getPrayerTimes(location: string, method = 5, school = 0): 
 		}
 	}
 
-	throw new Error('The api returned an invalid response, try again later')
+	throw error()
 }

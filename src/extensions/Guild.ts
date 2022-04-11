@@ -5,7 +5,7 @@ class Guild extends BaseGuild {
 	get connection() {
 		const connection = getVoiceConnection(this.id)
 
-		if (connection && connection.state.status !== VoiceConnectionStatus.Disconnected) {
+		if (connection?.state.status !== VoiceConnectionStatus.Disconnected) {
 			return connection
 		}
 

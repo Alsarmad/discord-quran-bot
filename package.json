@@ -10,9 +10,9 @@
    },
    "author": "TheMaestroo",
    "dependencies": {
-      "@discordjs/voice": "^0.6.0",
+      "@discordjs/voice": "^0.8.0",
       "arabic2franko": "^1.0.3",
-      "discord.js": "^13.1.0",
+      "discord.js": "^13.6.0",
       "dotenv": "^10.0.0",
       "ffmpeg-static": "^4.4.0",
       "fuse.js": "^6.4.6",

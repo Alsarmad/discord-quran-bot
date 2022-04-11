@@ -1,5 +1,5 @@
 import { Command, CTX } from 'discord.js'
-import EVERYAYAH_RECITERS from '../assets/reciters.json'
+import EVERYAYAH_RECITERS from '../../assets/reciters.json'
 import * as utils from '../utils'
 
 const PAGE_LIMIT = 604
