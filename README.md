@@ -1,5 +1,4 @@
 [![Deploy on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/TheMaestro1s/quran-bot)
-[![Run on Repl.it](https://repl.it/badge/github/TheMaestro1s/quran-bot)](https://repl.it/github/TheMaestro1s/quran-bot)
 
 # Quran bot
 
@@ -17,9 +16,8 @@ A simple bot that can play recitations of surahs, ayahs and mushaf pages from th
 
 ## 🪄 Easy Deploy
 
-- [repl.it](https://repl.it/github/TheMaestro1s/quran-bot)
-- [heroku](https://heroku.com/deploy?template=https://github.com/TheMaestro1s/quran-bot)
-
+- [Heroku](https://heroku.com/deploy?template=https://github.com/TheMaestro1s/quran-bot)
+- Replit (Soon)
 
 
 ## ⚙️ Setup (Advanced)
