@@ -12,7 +12,7 @@
       "@discordjs/voice": "^0.5.1",
       "arabic2franko": "^1.0.3",
       "discord.js": "^13.1.0",
-      "dotenv": "^10.0.0",
+      "dotenv": "^16.0.3",
       "ffmpeg-static": "^5.1.0",
       "fuse.js": "^6.4.6",
       "libsodium-wrappers": "^0.7.9",
