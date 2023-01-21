@@ -11,7 +11,7 @@
    "dependencies": {
       "@discordjs/voice": "^0.5.1",
       "arabic2franko": "^1.0.3",
-      "discord.js": "^13.1.0",
+      "discord.js": "^14.7.1",
       "dotenv": "^10.0.0",
       "ffmpeg-static": "^4.4.0",
       "fuse.js": "^6.4.6",
