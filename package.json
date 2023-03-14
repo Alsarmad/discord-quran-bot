@@ -9,7 +9,7 @@
    },
    "author": "TheMaestroo",
    "dependencies": {
-      "@discordjs/voice": "^0.14.0",
+      "@discordjs/voice": "^0.15.0",
       "arabic2franko": "^1.0.3",
       "discord.js": "^13.1.0",
       "dotenv": "^16.0.3",
